@@ -6,13 +6,25 @@ use Illuminate\Http\Request;
 use App\Models\Rapat;
 use App\Models\Ruang;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
 
 class RapatController extends Controller
 {
     public function index()
     {
-        $rapat = Rapat::with('ruang')->orderBy('tanggal', 'asc')->get();
-        return view('rapat.index', compact('rapat'));
+        $today = now()->toDateString(); // yyyy-mm-dd
+
+        $rapatMendatang = Rapat::with('ruang')
+            ->whereDate('tanggal', '>=', $today)
+            ->orderBy('tanggal', 'asc')
+            ->get();
+
+        $rapatSelesai = Rapat::with('ruang')
+            ->whereDate('tanggal', '<', $today)
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        return view('rapat.index', compact('rapatMendatang', 'rapatSelesai'));
     }
 
     public function create()

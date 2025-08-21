@@ -8,6 +8,9 @@ use App\Http\Controllers\RapatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AbsensiController;
 
+// Route untuk absensi realtime
+Route::get('/dashboard/absensi/realtime', [DashboardController::class, 'absensiRealtime'])->name('dashboard.absensi.realtime');
+
 // Homepage (daftar rapat untuk peserta)
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

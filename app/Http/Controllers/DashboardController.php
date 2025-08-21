@@ -15,6 +15,22 @@ class DashboardController extends Controller
         $totalRapat = Rapat::count();
         $totalPeserta = Absensi::count();
 
-        return view('dashboard', compact('totalRuang', 'totalRapat', 'totalPeserta'));
+        // Ambil 8 absensi terakhir secara global
+        $absensiTerbaru = Absensi::with('rapat')
+            ->orderBy('waktu_absen', 'desc')
+            ->limit(7)
+            ->get();
+
+        return view('dashboard', compact('totalRuang', 'totalRapat', 'totalPeserta', 'absensiTerbaru'));
+    }
+
+    public function absensiRealtime()
+    {
+        $absensiTerbaru = Absensi::with('rapat')
+            ->orderBy('waktu_absen', 'desc')
+            ->limit(8)
+            ->get();
+
+        return view('absensi.absensi-table', compact('absensiTerbaru'));
     }
 }

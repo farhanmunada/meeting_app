@@ -23,8 +23,8 @@ class Rapat extends Model
 
     // Cast tanggal dan waktu agar bisa pakai format() di view
     protected $casts = [
-        'tanggal' => 'date',               // otomatis Carbon
-        'waktu_mulai' => 'datetime:H:i',   // optional, jika mau format waktu
+        'tanggal' => 'date',
+        'waktu_mulai' => 'datetime:H:i',
         'waktu_selesai' => 'datetime:H:i',
     ];
 
